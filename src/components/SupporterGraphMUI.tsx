@@ -11,6 +11,8 @@ import { transformSupporterData } from '../utils/transformSupporterData';
 import type { SupporterGraphData } from '../types/SupporterGraphData';
 import { CustomItemTooltip } from './SupporterCustomItemTooltip';
 
+import { ChartsLegend } from '@mui/x-charts';
+
 const SupporterGraphMUI = ({ rawData }: { rawData: SupporterGraphData }) => {
   const { data } = transformSupporterData(rawData);
 
@@ -28,7 +30,7 @@ const SupporterGraphMUI = ({ rawData }: { rawData: SupporterGraphData }) => {
         height={400}
         dataset={chartData}
         series={[
-          { type: 'line', dataKey: 'cumulativePlanned', label: 'Planned', color: '#1976d2', markStyle: { fill: 'transparent', stroke: 'transparent' }, },
+          { type: 'line', dataKey: 'cumulativePlanned', label: 'Planned', color: '#1976d2'},
           { type: 'line', dataKey: 'cumulativeActual', label: 'Actual', color: '#2e7d32' },
           { type: 'line', dataKey: 'cumulativeForecast', label: 'Forecast', color: '#fbc02d' },
           { type: 'line', dataKey: 'cumulativeDriftLimit', label: 'Drift Limit', color: '#ef6c00' },
@@ -39,6 +41,7 @@ const SupporterGraphMUI = ({ rawData }: { rawData: SupporterGraphData }) => {
         <MarkPlot />
         <ChartsXAxis />
         <ChartsYAxis />
+        <ChartsLegend />
         {rawData.current_time_index != null && rawData.orders[rawData.current_time_index] && (
           <ChartsReferenceLine
             x={`${rawData.orders[rawData.current_time_index].order_name} (${rawData.orders[rawData.current_time_index].time})`}

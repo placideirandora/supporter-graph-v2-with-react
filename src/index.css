@@ -13,9 +13,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.MuiChartsMark {
-  opacity: 0;
-  pointer-events: auto; /* ✅ still hoverable */
+.MuiChartsLegend-root {
+  margin-top: 24px;
 }
 
 a {

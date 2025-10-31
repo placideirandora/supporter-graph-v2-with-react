@@ -57,7 +57,7 @@ export function CustomItemTooltip({
         >
           <Stack spacing={1}>
             {/* ✅ Show hovered series value */}
-            <Stack direction="row" alignItems="center">
+            {/* <Stack direction="row" alignItems="center">
               <div
                 style={{
                   width: 11,
@@ -68,7 +68,7 @@ export function CustomItemTooltip({
               />
               <Typography sx={{ ml: 2 }}>{tooltipData.label}</Typography>
               <Typography sx={{ ml: 2 }}>{tooltipData.formattedValue}</Typography>
-            </Stack>
+            </Stack> */}
 
             {/* ✅ Show all cumulative values */}
             {hoveredData && (
