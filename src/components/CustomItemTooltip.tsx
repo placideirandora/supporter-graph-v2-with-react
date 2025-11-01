@@ -15,8 +15,6 @@ export function CustomItemTooltip() {
     return null;
   }
 
-  console.log("TOOLTIP DATA: ", tooltipData);
-
   const isMousePointer = mousePosition?.pointerType === 'mouse';
   const yOffset = isMousePointer ? 0 : 40 - mousePosition.height;
 

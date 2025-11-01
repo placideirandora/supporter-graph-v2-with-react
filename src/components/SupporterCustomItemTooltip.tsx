@@ -56,38 +56,51 @@ export function CustomItemTooltip({
           }}
         >
           <Stack spacing={1}>
-            {/* ✅ Show hovered series value */}
-            {/* <Stack direction="row" alignItems="center">
-              <div
-                style={{
-                  width: 11,
-                  height: 11,
-                  borderRadius: '50%',
-                  backgroundColor: tooltipData.color,
-                }}
-              />
-              <Typography sx={{ ml: 2 }}>{tooltipData.label}</Typography>
-              <Typography sx={{ ml: 2 }}>{tooltipData.formattedValue}</Typography>
-            </Stack> */}
-
             {/* ✅ Show all cumulative values */}
             {hoveredData && (
               <Stack spacing={0.5} sx={{ pl: 2 }}>
-                <Typography variant="body2" color="text.secondary">
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+                >
+                  <svg width="8" height="8" style={{ marginRight: 4 }}>
+                    <circle cx="4" cy="4" r="4" fill="#1976d2" />
+                  </svg>
                   Planned: {hoveredData.cumulativePlanned}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+                >
+                  <svg width="8" height="8" style={{ marginRight: 4 }}>
+                    <circle cx="4" cy="4" r="4" fill="#2e7d32" />
+                  </svg>
                   Actual: {hoveredData.cumulativeActual}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+                >
+                  <svg width="8" height="8" style={{ marginRight: 4 }}>
+                    <circle cx="4" cy="4" r="4" fill="#fbc02d" />
+                  </svg>
                   Forecast: {hoveredData.cumulativeForecast}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+                >
+                  <svg width="8" height="8" style={{ marginRight: 4 }}>
+                    <circle cx="4" cy="4" r="4" fill="#ef6c00" />
+                  </svg>
                   Drift Limit: {hoveredData.cumulativeDriftLimit}
                 </Typography>
               </Stack>
             )}
-
             {/* ✅ Show order metadata */}
             {hoveredOrder && (
               <Stack spacing={0.5} sx={{ pl: 2 }}>
