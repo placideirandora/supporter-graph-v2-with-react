@@ -14,7 +14,7 @@ import { CustomItemTooltip } from './SupporterCustomItemTooltip';
 import { ChartsLegend } from '@mui/x-charts';
 
 const SupporterGraphMUI = ({ rawData }: { rawData: SupporterGraphData }) => {
-  const { data } = transformSupporterData(rawData);
+  const { data, summary } = transformSupporterData(rawData);
 
   const chartData = data.map((d) => ({
     xLabel: d.xLabel,
@@ -72,14 +72,27 @@ const SupporterGraphMUI = ({ rawData }: { rawData: SupporterGraphData }) => {
         {rawData.current_time_index != null &&
           rawData.orders[rawData.current_time_index] && (
             <ChartsReferenceLine
-              x={`${rawData.orders[rawData.current_time_index].order_name} (${
-                rawData.orders[rawData.current_time_index].time
-              })`}
+              x={`${rawData.orders[rawData.current_time_index].order_name}`}
               lineStyle={{ stroke: 'gray', strokeDasharray: '4 2' }}
               label="Now"
               labelStyle={{ fill: 'gray', fontSize: 12 }}
             />
           )}
+
+         {/* Horizontal reference lines */}
+        <ChartsReferenceLine
+          y={rawData.allowed_support_per_day}
+          lineStyle={{ stroke: 'orange', strokeDasharray: '4 2' }}
+          label="Limit"
+          labelStyle={{ fill: 'orange', fontSize: 12 }}
+        />
+        
+        <ChartsReferenceLine
+          y={summary.totalPlanned}
+          lineStyle={{ stroke: '#1976d2', strokeDasharray: '4 2' }}
+          label="Planned Total"
+          labelStyle={{ fill: '#1976d2', fontSize: 12 }}
+        />
 
         <CustomItemTooltip orders={rawData.orders} chartData={chartData} />
       </ResponsiveChartContainer>

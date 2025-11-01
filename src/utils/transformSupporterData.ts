@@ -49,7 +49,7 @@ export const transformSupporterData = (
       index,
       exceedsPlanned: order.actual > order.planned,
       exceedsLimit: cumulativeActual > rawData.allowed_support_per_day,
-      xLabel: `${order.order_name} (${order.time})`,
+      xLabel: `${order.order_name}`,
     };
   });
 
