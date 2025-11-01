@@ -1,17 +1,32 @@
+// PENDING TODO: FIND A WAY TO DISPLAY THE POPUP DETAILS UPON RANGE HOVER. CURRENT
+// THE USER IS FORCED TO OVER OVER THE SPECIFIC POINT
+
+// PENDING TODO: FIND A WAY TO REMOVE THE DOTS
+
+
+// WHY HAD YOU TO SWITCH FROM LINE CHART TO THE CUSTOM CHART WITH CUSTOM TOOLTIP? BECAUSE I COULD NOT ADD ADDITIONAL DETAILS IN THE TOOLTIP OF THE LINE CHART? IF SO, IS THERE A WAY TO DO IT?
+
+// PREPARE ALL OPTIONS AND YOU WILL DEMO THEM TO FBN AND MAKE A CONCLUSION AFTER THAT
+
+// THESE ARE THE OPTIONS YOU WILL DEMO TO FBN: LINE CHART WITHOUT ADDITIONAL DETAILS, CUSTOM CHART WITH ADDITIONAL DETAILS, LINE CHART WITH ADDITIONAL DETAILS (IF POSSIBLE)
+
+// WHEN I USED LINE CHART WITH CUSTOM TOOLTIP PASSED, THE DATA POINTS WERE DISPLAYED. WHEN HID THEM
+// I HOVERED AND COULD NOT SEE THE TOOLTIP. SO IT SEEMS THAT THE TOOLTIP IS TIED TO THE DATA POINTS WHEN
+// PASSING A CUSTOM TOOLTIP COMPONENT. IS THERE A WAY TO DETACH THE TOOLTIP FROM THE DATA POINTS?
+
+
+
+// ICYINGENZI UGOMBA GUKORA EJO KU CYUMWERU 2.11.2025 NUGUKORA DEMO CALL MU GITONDO NA 
+// FBN UKAMWEREKA PROGRESS YAWE YOSE NIBA BYOSE WAGERAGEJE MAZE UKUMVA UKO AKUBWIRA
+// UZABANZE URABURE NOEL MBERE YA DEMO CALL UKAMUBWIRA IBYO WAKOZE KUGIRA NGO UTAZAGONGANA NA 
+// ALBERT
+
+
 import * as React from 'react';
-import {
-  ResponsiveChartContainer,
-  LinePlot,
-  MarkPlot,
-  ChartsXAxis,
-  ChartsYAxis,
-  ChartsReferenceLine,
-} from '@mui/x-charts';
+import { LineChart, ChartsReferenceLine } from '@mui/x-charts';
 import { transformSupporterData } from '../utils/transformSupporterData';
 import type { SupporterGraphData } from '../types/SupporterGraphData';
 import { CustomItemTooltip } from './SupporterCustomItemTooltip';
-
-import { ChartsLegend } from '@mui/x-charts';
 
 const SupporterGraphMUI = ({ rawData }: { rawData: SupporterGraphData }) => {
   const { data, summary } = transformSupporterData(rawData);
@@ -26,49 +41,52 @@ const SupporterGraphMUI = ({ rawData }: { rawData: SupporterGraphData }) => {
 
   return (
     <div style={{ width: '100%' }}>
-      <ResponsiveChartContainer
+      <LineChart
         height={400}
         margin={{ bottom: 86 }}
         dataset={chartData}
+        xAxis={[{ scaleType: 'point', dataKey: 'xLabel' }]}
         series={[
           {
-            type: 'line',
             dataKey: 'cumulativePlanned',
             label: 'Planned',
             color: '#1976d2',
+            showMark: false,
           },
           {
-            type: 'line',
             dataKey: 'cumulativeActual',
             label: 'Actual',
             color: '#2e7d32',
+            showMark: false,
           },
           {
-            type: 'line',
             dataKey: 'cumulativeForecast',
             label: 'Forecast',
             color: '#fbc02d',
+            showMark: false,
           },
           {
-            type: 'line',
             dataKey: 'cumulativeDriftLimit',
             label: 'Drift Limit',
             color: '#ef6c00',
+            showMark: false,
           },
         ]}
-        xAxis={[{ scaleType: 'point', dataKey: 'xLabel' }]}
+        tooltip={{
+          trigger: 'axis',
+        }}
+        slots={{
+          axisContent: () => (
+            <CustomItemTooltip orders={rawData.orders} chartData={chartData} />
+          ),
+        }}
+        slotProps={{
+          legend: {
+            direction: 'row', // Optional: 'column' for vertical layout
+            position: { vertical: 'bottom', horizontal: 'middle' },
+          },
+        }}
       >
-        <LinePlot />
-        <MarkPlot />
-        <ChartsXAxis />
-        <ChartsYAxis />
-        <ChartsLegend
-          position={{
-            horizontal: 'middle',
-            vertical: 'bottom',
-          }}
-          direction="row"
-        />
         {rawData.current_time_index != null &&
           rawData.orders[rawData.current_time_index] && (
             <ChartsReferenceLine
@@ -79,30 +97,47 @@ const SupporterGraphMUI = ({ rawData }: { rawData: SupporterGraphData }) => {
             />
           )}
 
-         {/* Horizontal reference lines */}
         <ChartsReferenceLine
           y={rawData.allowed_support_per_day}
           lineStyle={{ stroke: 'orange', strokeDasharray: '4 2' }}
           label="Limit"
           labelStyle={{ fill: 'orange', fontSize: 12 }}
         />
-        
+
         <ChartsReferenceLine
           y={summary.totalPlanned}
           lineStyle={{ stroke: '#1976d2', strokeDasharray: '4 2' }}
           label="Planned Total"
           labelStyle={{ fill: '#1976d2', fontSize: 12 }}
         />
-
-        <CustomItemTooltip orders={rawData.orders} chartData={chartData} />
-      </ResponsiveChartContainer>
+      </LineChart>
     </div>
   );
 };
 
 export default SupporterGraphMUI;
 
+
+
 // PENDING TODO: FIND A WAY TO DISPLAY THE POPUP DETAILS UPON RANGE HOVER. CURRENT
 // THE USER IS FORCED TO OVER OVER THE SPECIFIC POINT
 
 // PENDING TODO: FIND A WAY TO REMOVE THE DOTS
+
+
+// WHY HAD YOU TO SWITCH FROM LINE CHART TO THE CUSTOM CHART WITH CUSTOM TOOLTIP? BECAUSE I COULD NOT ADD ADDITIONAL DETAILS IN THE TOOLTIP OF THE LINE CHART? IF SO, IS THERE A WAY TO DO IT?
+
+// PREPARE ALL OPTIONS AND YOU WILL DEMO THEM TO FBN AND MAKE A CONCLUSION AFTER THAT
+
+// THESE ARE THE OPTIONS YOU WILL DEMO TO FBN: LINE CHART WITHOUT ADDITIONAL DETAILS, CUSTOM CHART WITH ADDITIONAL DETAILS, LINE CHART WITH ADDITIONAL DETAILS (IF POSSIBLE)
+
+// WHEN I USED LINE CHART WITH CUSTOM TOOLTIP PASSED, THE DATA POINTS WERE DISPLAYED. WHEN HID THEM
+// I HOVERED AND COULD NOT SEE THE TOOLTIP. SO IT SEEMS THAT THE TOOLTIP IS TIED TO THE DATA POINTS WHEN
+// PASSING A CUSTOM TOOLTIP COMPONENT. IS THERE A WAY TO DETACH THE TOOLTIP FROM THE DATA POINTS?
+
+
+
+// ICYINGENZI UGOMBA GUKORA EJO KU CYUMWERU 2.11.2025 NUGUKORA DEMO CALL MU GITONDO NA 
+// FBN UKAMWEREKA PROGRESS YAWE YOSE NIBA BYOSE WAGERAGEJE MAZE UKUMVA UKO AKUBWIRA
+// UZABANZE URABURE NOEL MBERE YA DEMO CALL UKAMUBWIRA IBYO WAKOZE KUGIRA NGO UTAZAGONGANA NA 
+// ALBERT
