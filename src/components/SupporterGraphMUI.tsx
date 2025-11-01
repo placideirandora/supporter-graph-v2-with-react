@@ -16,7 +16,7 @@ import { ChartsLegend } from '@mui/x-charts';
 const SupporterGraphMUI = ({ rawData }: { rawData: SupporterGraphData }) => {
   const { data } = transformSupporterData(rawData);
 
-  const chartData = data.map(d => ({
+  const chartData = data.map((d) => ({
     xLabel: d.xLabel,
     cumulativePlanned: d.cumulativePlanned,
     cumulativeActual: d.cumulativeActual,
@@ -28,12 +28,33 @@ const SupporterGraphMUI = ({ rawData }: { rawData: SupporterGraphData }) => {
     <div style={{ width: '100%' }}>
       <ResponsiveChartContainer
         height={400}
+        margin={{ bottom: 86 }}
         dataset={chartData}
         series={[
-          { type: 'line', dataKey: 'cumulativePlanned', label: 'Planned', color: '#1976d2'},
-          { type: 'line', dataKey: 'cumulativeActual', label: 'Actual', color: '#2e7d32' },
-          { type: 'line', dataKey: 'cumulativeForecast', label: 'Forecast', color: '#fbc02d' },
-          { type: 'line', dataKey: 'cumulativeDriftLimit', label: 'Drift Limit', color: '#ef6c00' },
+          {
+            type: 'line',
+            dataKey: 'cumulativePlanned',
+            label: 'Planned',
+            color: '#1976d2',
+          },
+          {
+            type: 'line',
+            dataKey: 'cumulativeActual',
+            label: 'Actual',
+            color: '#2e7d32',
+          },
+          {
+            type: 'line',
+            dataKey: 'cumulativeForecast',
+            label: 'Forecast',
+            color: '#fbc02d',
+          },
+          {
+            type: 'line',
+            dataKey: 'cumulativeDriftLimit',
+            label: 'Drift Limit',
+            color: '#ef6c00',
+          },
         ]}
         xAxis={[{ scaleType: 'point', dataKey: 'xLabel' }]}
       >
@@ -41,20 +62,26 @@ const SupporterGraphMUI = ({ rawData }: { rawData: SupporterGraphData }) => {
         <MarkPlot />
         <ChartsXAxis />
         <ChartsYAxis />
-        <ChartsLegend />
-        {rawData.current_time_index != null && rawData.orders[rawData.current_time_index] && (
-          <ChartsReferenceLine
-            x={`${rawData.orders[rawData.current_time_index].order_name} (${rawData.orders[rawData.current_time_index].time})`}
-            lineStyle={{ stroke: 'gray', strokeDasharray: '4 2' }}
-            label="Now"
-            labelStyle={{ fill: 'gray', fontSize: 12 }}
-          />
-        )}
-
-        <CustomItemTooltip
-          orders={rawData.orders}
-          chartData={chartData}
+        <ChartsLegend
+          position={{
+            horizontal: 'middle',
+            vertical: 'bottom',
+          }}
+          direction="row"
         />
+        {rawData.current_time_index != null &&
+          rawData.orders[rawData.current_time_index] && (
+            <ChartsReferenceLine
+              x={`${rawData.orders[rawData.current_time_index].order_name} (${
+                rawData.orders[rawData.current_time_index].time
+              })`}
+              lineStyle={{ stroke: 'gray', strokeDasharray: '4 2' }}
+              label="Now"
+              labelStyle={{ fill: 'gray', fontSize: 12 }}
+            />
+          )}
+
+        <CustomItemTooltip orders={rawData.orders} chartData={chartData} />
       </ResponsiveChartContainer>
     </div>
   );
