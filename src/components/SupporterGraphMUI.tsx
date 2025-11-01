@@ -101,3 +101,8 @@ const SupporterGraphMUI = ({ rawData }: { rawData: SupporterGraphData }) => {
 };
 
 export default SupporterGraphMUI;
+
+// PENDING TODO: FIND A WAY TO DISPLAY THE POPUP DETAILS UPON RANGE HOVER. CURRENT
+// THE USER IS FORCED TO OVER OVER THE SPECIFIC POINT
+
+// PENDING TODO: FIND A WAY TO REMOVE THE DOTS
